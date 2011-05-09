@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{configoro}
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Tim Morgan"]
-  s.date = %q{2011-05-05}
+  s.authors = [%q{Tim Morgan}]
+  s.date = %q{2011-05-09}
   s.description = %q{Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files.}
   s.email = %q{git@timothymorgan.info}
   s.extra_rdoc_files = [
@@ -41,9 +41,9 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/RISCfuture/configoro}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.7.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.1}
   s.summary = %q{Configuration object and YAML-based storage for Rails apps}
 
   if s.respond_to? :specification_version then

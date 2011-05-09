@@ -1,7 +1,7 @@
 h1. Configoro -- Environment-specific configuration data for Rails apps
 
 | *Author* | Tim Morgan |
-| *Version* | 1.0 (May 5, 2011) |
+| *Version* | 1.1 (May 9, 2011) |
 | *License* | Released under the MIT license. |
 
 h2. About
