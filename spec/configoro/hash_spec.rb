@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Configoro::Hash do
-  subject { Configoro::Hash.new(:string => 'value', :fixnum => 123, :hash => { :foo => 'bar' }, :array => [ 1, 2, 3 ]) }
+  subject { Configoro::Hash.new(:string => 'value', :fixnum => 123, :hash => { :foo => 'bar' }, :array => [ 1, 2, 3 ], :nilval => nil) }
 
   context "[getters]" do
     it "should allow access by symbol" do
@@ -14,27 +14,43 @@ describe Configoro::Hash do
 
     it "should allow access by method" do
       subject.array.should eql([ 1, 2, 3 ])
+      subject.array.should eql([ 1, 2, 3 ])
     end
+    
+    it "should allow access by predicate method" do
+      subject.string?.should eql(true)
+      subject.string?.should eql(true)
+      subject.nilval?.should eql(false)
+      subject.nilval?.should eql(false)
+    end
+    
+    # We try the above methods twice: Once for creating the method, the other
+    # for accessing it
   end
 
   context "[accessor methods]" do
     it "should define an accessor method upon first access" do
       subject.methods.should_not include(:string)
+      subject.methods.should_not include(:string?)
       subject.string
       subject.methods.should include(:string)
+      subject.methods.should include(:string?)
     end
 
     it "should remove the accessor method if the key is removed from the hash" do
       subject.string
       subject.methods.should include(:string)
+      subject.methods.should include(:string?)
       subject.delete 'string'
       proc { subject.string }.should raise_error(NameError)
       subject.methods.should_not include(:string)
+      subject.methods.should_not include(:string?)
     end
 
     it "should not override existing methods" do
       subject['inspect'] = 'wrong!'
       subject.inspect.should_not eql('wrong!')
+      subject.methods.should_not include(:inspect?)
     end
   end
 

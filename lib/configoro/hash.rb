@@ -79,6 +79,12 @@ class Configoro::Hash < HashWithIndifferentAccess
       else
         raise ArgumentError, "wrong number of arguments (#{args.size} for 0)"
       end
+    elsif meth.to_s =~ /^(.+)\?$/ and include?(root_meth = $1) then
+      if args.empty? then
+        !! create_getter(root_meth) #TODO duplication of logic
+      else
+        raise ArgumentError, "wrong number of arguments (#{args.size} for 0)"
+      end
     else
       super
     end
@@ -117,13 +123,25 @@ class Configoro::Hash < HashWithIndifferentAccess
         remove_getter meth
       end
     end
-
+    
+    singleton_class.send(:define_method, :"#{meth}?") do
+      if include?(meth.to_s) then
+        !! self[meth.to_s]
+      else
+        remove_getter meth
+      end
+    end
+    
     self[meth.to_s]
   end
 
   def remove_getter(meth)
     if methods.include?(meth.to_sym) then
       instance_eval "undef #{meth.to_sym.inspect}"
+    end
+    
+    if methods.include?(:"#{meth}?") then
+      instance_eval "undef #{:"#{meth}?".inspect}"
     end
 
     raise NameError, "undefined local variable or method `#{meth}' for #{self.inspect}"
