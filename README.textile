@@ -70,6 +70,10 @@ Configuration is stored within the @config/environments@ directory of your Rails
 app. Files ending in ".yml" are loaded from the @common/@ subdirectory and a
 subdirectory named after the current environment.
 
+Configuration files are preprocessed as ERB, in the same way that Rails
+preprocesses @config/database.yml@. This allows dynamic configuration,
+e.g. @host: <%= ENV["DB_HOST"] || "localhost" %>@.
+
 Each file goes into its own hash in the configuration. For example, if you
 placed a file called @memcache.yml@ within @config/environments/development@,
 you would be able to access your Memcache timeout using
