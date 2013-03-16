@@ -30,7 +30,7 @@ class Configoro::Hash < HashWithIndifferentAccess
       when String
         raise ArgumentError, "Only files ending in .yml can be added" unless File.extname(hsh_or_path) == '.yml'
         return self unless File.exist?(hsh_or_path)
-        data = YAML.load_file(hsh_or_path)
+        data = load_preprocessed_yaml(hsh_or_path)
         deep_merge! File.basename(hsh_or_path, ".yml") => data
       when ::Hash
         deep_merge! hsh_or_path
@@ -146,4 +146,9 @@ class Configoro::Hash < HashWithIndifferentAccess
 
     raise NameError, "undefined local variable or method `#{meth}' for #{self.inspect}"
   end
+
+  def load_preprocessed_yaml(path)
+    YAML.load(ERB.new(IO.read(path)).result)
+  end
+
 end

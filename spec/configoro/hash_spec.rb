@@ -95,6 +95,11 @@ describe Configoro::Hash do
       subject << "example.yml"
       subject.should be_empty
     end
+
+    it "should preprocess YAML file as ERB" do
+      subject << "#{File.dirname __FILE__}/../data/config/environments/common/erb_test.yml"
+      subject.erb_test.sum.should == 2
+    end
   end
 
   describe "#deep_merge!" do
