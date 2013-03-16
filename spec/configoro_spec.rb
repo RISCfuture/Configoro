@@ -34,7 +34,7 @@ describe Configoro do
     it "should not complain when there is no directory for the current environment" do
       Rails.stub!(:env).and_return('unknown')
       Configoro.initialize
-      MyApp::Configuration.should eql({"basic"=>{"common_only"=>"common", "env_name"=>"common"}, "hash_test"=>{"akey"=>"value", "subhash"=>{"key1"=>"val1", "key2"=>"val2"}}})
+      MyApp::Configuration.should eql({"basic"=>{"common_only"=>"common", "env_name"=>"common"}, "erb_test" => {"sum" => 2}, "hash_test"=>{"akey"=>"value", "subhash"=>{"key1"=>"val1", "key2"=>"val2"}}})
     end
   end
 end

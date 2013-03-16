@@ -1,5 +1,6 @@
 raise "Configoro must be used in the context of a Rails 3 application" unless defined?(Rails)
 
+require 'erb'
 require 'yaml'
 require 'bundler'
 Bundler.setup
