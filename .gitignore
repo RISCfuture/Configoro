@@ -11,6 +11,9 @@ doc
 # bundler
 .bundle
 
+# Gemfile.lock should not be committed for gem development.
+Gemfile.lock
+
 # jeweler generated
 pkg
 
