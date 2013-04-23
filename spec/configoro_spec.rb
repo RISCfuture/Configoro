@@ -36,5 +36,23 @@ describe Configoro do
       Configoro.initialize
       MyApp::Configuration.should eql({"basic"=>{"common_only"=>"common", "env_name"=>"common"}, "erb_test" => {"sum" => 2}, "hash_test"=>{"akey"=>"value", "subhash"=>{"key1"=>"val1", "key2"=>"val2"}}})
     end
+
+    context "[custom search paths]" do
+      before(:each) { Configoro.instance_variable_set :@paths, nil }
+
+      it "should use common configuration under a custom search path" do
+        Rails.stub!(:env).and_return('unknown')
+        Configoro.paths << File.join(File.dirname(__FILE__), 'data', 'other')
+        Configoro.initialize
+        MyApp::Configuration.basic.env_name.should eql('other_common')
+      end
+
+      it "should use environment-specific configuration under a custom search path" do
+        Rails.stub!(:env).and_return('development')
+        Configoro.paths << File.join(File.dirname(__FILE__), 'data', 'other')
+        Configoro.initialize
+        MyApp::Configuration.basic.env_name.should eql('other_development')
+      end
+    end
   end
 end
