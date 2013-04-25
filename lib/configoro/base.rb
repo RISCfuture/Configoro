@@ -14,7 +14,7 @@ module Configoro
   # @MyApp::Configuration@ (assuming an application named @MyApp@).
 
   def self.initialize
-    namespace.const_set :Configuration, build_hash(Rails.env)
+    namespace.const_set :Configuration, load_environment(Rails.env)
   end
 
   # The search paths Configoro uses to locate configuration files. By default
@@ -35,16 +35,31 @@ module Configoro
   #   end
 
   def self.paths
-    @paths ||= ["#{Rails.root}/config/environments"]
+    @paths ||= begin
+      paths = []
+      paths << "#{Rails.root}/config/environments" if defined?(Rails)
+      paths
+    end
   end
 
-  private
+  # Loads the configuration for an environment and returns it as a {Hash}. Use
+  # this method to access Configoro options outside the context of your Rails
+  # app. You will need to configure paths first (see example).
+  #
+  # @param [String] env The Rails environment.
+  # @return [Configoro::Hash] The configuration for that environment.
+  #
+  # @example Accessing Configoro options outside of Rails
+  #   Configoro.paths << "#{rails_root}/config/environments"
+  #   Configoro.load_environment(rails_env) #=> { ... }
 
-  def self.build_hash(env)
+  def self.load_environment(env)
     config = Hash.new
     load_data config, env
     config
   end
+
+  private
 
   def self.load_data(config, env)
     paths.each do |path|
