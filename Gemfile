@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'activesupport'
+
 group :development do
   gem 'rails', '>= 3.0'
 

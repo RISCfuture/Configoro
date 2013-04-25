@@ -90,6 +90,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  activesupport
   bundler
   jeweler
   rails (>= 3.0)
