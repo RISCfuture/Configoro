@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{configoro}
-  s.version = "1.1.0"
+  s.name = "configoro"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Tim Morgan}]
-  s.date = %q{2011-05-09}
-  s.description = %q{Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files.}
-  s.email = %q{git@timothymorgan.info}
+  s.authors = ["Tim Morgan"]
+  s.date = "2013-04-25"
+  s.description = "Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files."
+  s.email = "git@timothymorgan.info"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.textile"
@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    ".ruby-gemset",
+    ".ruby-version",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -34,17 +36,20 @@ Gem::Specification.new do |s|
     "spec/configoro/hash_spec.rb",
     "spec/configoro_spec.rb",
     "spec/data/config/environments/common/basic.yml",
+    "spec/data/config/environments/common/erb_test.yml",
     "spec/data/config/environments/common/hash_test.yml",
     "spec/data/config/environments/development/basic.yml",
     "spec/data/config/environments/development/hash_test.yml",
     "spec/data/config/environments/production/basic.yml",
+    "spec/data/other/common/basic.yml",
+    "spec/data/other/development/basic.yml",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/RISCfuture/configoro}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.1}
-  s.summary = %q{Configuration object and YAML-based storage for Rails apps}
+  s.homepage = "http://github.com/RISCfuture/configoro"
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.25"
+  s.summary = "Configuration object and YAML-based storage for Rails apps"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
