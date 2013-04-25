@@ -1,11 +1,17 @@
-raise "Configoro must be used in the context of a Rails 3 application" unless defined?(Rails)
+in_rails = defined?(Rails)
 
 require 'erb'
 require 'yaml'
-require 'bundler'
-Bundler.setup
+
+if in_rails
+  require 'bundler'
+  Bundler.setup
+end
 
 require 'configoro/base'
 require 'configoro/hash'
-require 'configoro/railtie'
-require "#{File.dirname __FILE__}/../generators/configoro_generator"
+
+if in_rails
+  require 'configoro/railtie'
+  require "#{File.dirname __FILE__}/../generators/configoro_generator"
+end
