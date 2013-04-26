@@ -43,7 +43,7 @@ module Configoro
     end
 
     # Recursively merges this hash with another hash. All nested hashes are forced
-    # to be @Configoro::Hash@ instances.
+    # to be `Configoro::Hash` instances.
     #
     # @param [::Hash] other_hash The hash to merge into this one.
     # @return [Configoro::Hash] This object.

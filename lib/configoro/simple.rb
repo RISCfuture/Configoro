@@ -5,6 +5,7 @@ require 'yaml'
 
 load File.join(File.dirname(__FILE__), 'base.rb')
 
+# @private
 class Configoro::HashWithIndifferentAccess < ::Hash
   def deep_merge(other_hash)
     dup.deep_merge!(other_hash)

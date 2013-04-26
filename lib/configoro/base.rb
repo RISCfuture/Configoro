@@ -4,7 +4,7 @@
 module Configoro
 
   # Creates the configuration dictionary and stores it under
-  # @MyApp::Configuration@ (assuming an application named @MyApp@).
+  # `MyApp::Configuration` (assuming an application named `MyApp`).
 
   def self.initialize
     namespace.const_set :Configuration, load_environment(Rails.env)

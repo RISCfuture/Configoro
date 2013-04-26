@@ -10,7 +10,7 @@ group :development do
 
   # DOCS
   gem 'yard'
-  gem 'RedCloth'
+  gem 'redcarpet'
 
   # LIBRARIES
   gem 'bundler'

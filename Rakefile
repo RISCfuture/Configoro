@@ -19,13 +19,13 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "configoro"
-  gem.homepage = "http://github.com/RISCfuture/configoro"
-  gem.license = "MIT"
-  gem.summary = %Q{Configuration object and YAML-based storage for Rails apps}
+  gem.name        = 'configoro'
+  gem.homepage    = 'http://github.com/RISCfuture/configoro'
+  gem.license     = 'MIT'
+  gem.summary     = %Q{Configuration object and YAML-based storage for Rails apps}
   gem.description = %Q{Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files.}
-  gem.email = "git@timothymorgan.info"
-  gem.authors = [ "Tim Morgan" ]
+  gem.email       = 'git@timothymorgan.info'
+  gem.authors     = ['Tim Morgan']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -44,14 +44,15 @@ task :default => :spec
 
 require 'yard'
 YARD::Rake::YardocTask.new do |doc|
-  doc.options << "-m" << "textile"
-  doc.options << "--protected"
-  doc.options << "--no-private"
-  doc.options << "-r" << "README.textile"
-  doc.options << "-o" << "doc"
-  doc.options << "--title" << "Configoro Documentation"
+  doc.options << '-m' << 'markdown'
+  doc.options << '-M' << 'redcarpet'
+  doc.options << '--protected'
+  doc.options << '--no-private'
+  doc.options << '-r' << 'README.md'
+  doc.options << '-o' << 'doc'
+  doc.options << '--title' << 'Configoro Documentation'
 
-  doc.files = [ 'lib/**/*', 'README.textile' ]
+  doc.files = %w(lib/**/* README.md)
 end
 
 desc "Generate API documentation"
