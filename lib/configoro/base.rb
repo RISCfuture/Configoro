@@ -3,13 +3,6 @@
 
 module Configoro
 
-  # @return [Module] The Rails application namespace; e.g., @MyApp@ for a Rails
-  #   app named @MyApp::Application@.
-
-  def self.namespace
-    Object.const_get Rails.application.class.to_s.split('::').first
-  end
-
   # Creates the configuration dictionary and stores it under
   # @MyApp::Configuration@ (assuming an application named @MyApp@).
 
@@ -42,6 +35,12 @@ module Configoro
     end
   end
 
+  # Resets any custom configuration paths set using {.paths}.
+
+  def self.reset_paths
+    remove_instance_variable :@paths
+  end
+
   # Loads the configuration for an environment and returns it as a {Hash}. Use
   # this method to access Configoro options outside the context of your Rails
   # app. You will need to configure paths first (see example).
@@ -54,12 +53,16 @@ module Configoro
   #   Configoro.load_environment(rails_env) #=> { ... }
 
   def self.load_environment(env)
-    config = Hash.new
+    config = Configoro::Hash.new
     load_data config, env
     config
   end
 
   private
+
+  def self.namespace
+    Object.const_get Rails.application.class.to_s.split('::').first
+  end
 
   def self.load_data(config, env)
     paths.each do |path|

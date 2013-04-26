@@ -7,8 +7,7 @@ Bundler.require :development
 require 'yaml'
 Bundler.setup
 
-require 'configoro/base'
-require 'configoro/hash'
+require 'configoro'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

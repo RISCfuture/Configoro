@@ -1,17 +1,29 @@
-in_rails = defined?(Rails)
+unless defined?(Rails)
+  raise "Configoro must be run in the context of a Rails environment, or require 'configoro/simple' outside of Rails"
+end
 
 require 'erb'
 require 'yaml'
 
-if in_rails
-  require 'bundler'
-  Bundler.setup
-end
+require 'bundler'
+Bundler.setup
 
-require 'configoro/base'
-require 'configoro/hash'
+require 'active_support/hash_with_indifferent_access'
+require 'active_support/core_ext/hash/deep_merge'
 
-if in_rails
-  require 'configoro/railtie'
-  require "#{File.dirname __FILE__}/../generators/configoro_generator"
+load 'configoro/base.rb'
+
+module Configoro
+
+  # undo anything done by configoro/simple...
+  begin
+    remove_const :Hash
+    remove_const :HashWithIndifferentAccess
+  rescue NameError
+    # ignored
+  end
 end
+load 'configoro/hash.rb'
+
+load 'configoro/railtie.rb'
+load "#{File.dirname __FILE__}/../generators/configoro_generator.rb"

@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     "lib/configoro/base.rb",
     "lib/configoro/hash.rb",
     "lib/configoro/railtie.rb",
+    "lib/configoro/simple.rb",
     "spec/configoro/hash_spec.rb",
     "spec/configoro_spec.rb",
     "spec/data/config/environments/common/basic.yml",
