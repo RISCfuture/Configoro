@@ -5,16 +5,16 @@
 
 Gem::Specification.new do |s|
   s.name = "configoro"
-  s.version = "1.2.3"
+  s.version = "1.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Morgan"]
-  s.date = "2013-04-25"
+  s.date = "2013-04-26"
   s.description = "Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files."
   s.email = "git@timothymorgan.info"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.textile"
+    "README.md"
   ]
   s.files = [
     ".document",
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.textile",
+    "README.md",
     "Rakefile",
     "VERSION",
     "configoro.gemspec",
@@ -60,7 +60,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rails>, [">= 3.0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
-      s.add_development_dependency(%q<RedCloth>, [">= 0"])
+      s.add_development_dependency(%q<redcarpet>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
@@ -68,7 +68,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rails>, [">= 3.0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
-      s.add_dependency(%q<RedCloth>, [">= 0"])
+      s.add_dependency(%q<redcarpet>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
     end
@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rails>, [">= 3.0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
-    s.add_dependency(%q<RedCloth>, [">= 0"])
+    s.add_dependency(%q<redcarpet>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
   end
