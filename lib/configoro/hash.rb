@@ -101,11 +101,19 @@ module Configoro
       end
     end
 
-    def convert_value(value)
-      if value.is_a?(::Hash)
-        self.class.new_from_hash_copying_default(value)
+    def convert_value(value, options={})
+      if value.is_a? ::Hash
+        if options[:for] == :to_hash
+          value.to_hash
+        else
+          #value.nested_under_indifferent_access
+          self.class.new_from_hash_copying_default(value)
+        end
       elsif value.is_a?(Array)
-        value.dup.replace(value.map { |e| convert_value(e) })
+        unless options[:for] == :assignment
+          value = value.dup
+        end
+        value.map! { |e| convert_value(e, options) }
       else
         value
       end

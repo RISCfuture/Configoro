@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'activesupport'
 
 group :development do
-  gem 'rails', '>= 3.0'
+  gem 'rails', '>= 4.0'
 
   # SPECS
   gem 'rspec'
