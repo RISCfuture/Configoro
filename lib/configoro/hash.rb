@@ -93,6 +93,18 @@ module Configoro
       "#{to_hash.inspect}:#{self.class.to_s}"
     end
 
+    def to_symbolized_hash
+      inject({}) do |hsh, (key, value)|
+        case value
+          when Configoro::Hash
+            hsh[key.to_sym] = value.to_symbolized_hash
+          else
+            hsh[key.to_sym] = value
+        end
+        hsh
+      end
+    end
+
     protected
 
     def self.new_from_hash_copying_default(hash)
