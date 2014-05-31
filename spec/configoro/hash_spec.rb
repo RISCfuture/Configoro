@@ -119,4 +119,10 @@ describe Configoro::Hash do
       subject.hsh.key2.should eql('newval')
     end
   end
+
+  describe "#to_symbolized_hash" do
+    subject { Configoro::Hash.new(foo: {bar: 'baz'}) }
+
+    its(:to_symbolized_hash) { should eql(foo: {bar: 'baz'}) }
+  end
 end
