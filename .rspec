@@ -1,1 +1,2 @@
--fs --color
+--color
+--format=documentation

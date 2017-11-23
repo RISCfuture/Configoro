@@ -15,8 +15,8 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
   config.before :each do
-    application = mock('Rails.application', :class => 'MyApp::Application')
-    ::Rails = mock('Rails', :application => application, :env => 'development', :root => File.join(File.dirname(__FILE__), 'data'))
+    application = double('Rails.application', :class => 'MyApp::Application')
+    ::Rails = double('Rails', :application => application, :env => 'development', :root => File.join(File.dirname(__FILE__), 'data'))
     Configoro.initialize
   end
 end

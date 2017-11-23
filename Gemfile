@@ -7,6 +7,7 @@ group :development do
 
   # SPECS
   gem 'rspec'
+  gem 'rspec-its', require: 'rspec/its'
 
   # DOCS
   gem 'yard'

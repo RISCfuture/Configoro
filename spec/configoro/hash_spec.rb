@@ -5,23 +5,23 @@ describe Configoro::Hash do
 
   context "[getters]" do
     it "should allow access by symbol" do
-      subject[:string].should eql('value')
+      expect(subject[:string]).to eql('value')
     end
 
     it "should allow access by string" do
-      subject['fixnum'].should eql(123)
+      expect(subject['fixnum']).to eql(123)
     end
 
     it "should allow access by method" do
-      subject.array.should eql([ 1, 2, 3 ])
-      subject.array.should eql([ 1, 2, 3 ])
+      expect(subject.array).to eql([ 1, 2, 3 ])
+      expect(subject.array).to eql([ 1, 2, 3 ])
     end
     
     it "should allow access by predicate method" do
-      subject.string?.should eql(true)
-      subject.string?.should eql(true)
-      subject.nilval?.should eql(false)
-      subject.nilval?.should eql(false)
+      expect(subject.string?).to eql(true)
+      expect(subject.string?).to eql(true)
+      expect(subject.nilval?).to eql(false)
+      expect(subject.nilval?).to eql(false)
     end
     
     # We try the above methods twice: Once for creating the method, the other
@@ -30,39 +30,39 @@ describe Configoro::Hash do
 
   context "[accessor methods]" do
     it "should define an accessor method upon first access" do
-      subject.methods.should_not include(:string)
-      subject.methods.should_not include(:string?)
+      expect(subject.methods).not_to include(:string)
+      expect(subject.methods).not_to include(:string?)
       subject.string
-      subject.methods.should include(:string)
-      subject.methods.should include(:string?)
+      expect(subject.methods).to include(:string)
+      expect(subject.methods).to include(:string?)
     end
 
     it "should remove the accessor method if the key is removed from the hash" do
       subject.string
-      subject.methods.should include(:string)
-      subject.methods.should include(:string?)
+      expect(subject.methods).to include(:string)
+      expect(subject.methods).to include(:string?)
       subject.delete 'string'
-      proc { subject.string }.should raise_error(NameError)
-      subject.methods.should_not include(:string)
-      subject.methods.should_not include(:string?)
+      expect { subject.string }.to raise_error(NameError)
+      expect(subject.methods).not_to include(:string)
+      expect(subject.methods).not_to include(:string?)
     end
 
     it "should not override existing methods" do
       subject['inspect'] = 'wrong!'
-      subject.inspect.should_not eql('wrong!')
-      subject.methods.should_not include(:inspect?)
+      expect(subject.inspect).not_to eql('wrong!')
+      expect(subject.methods).not_to include(:inspect?)
     end
   end
 
   describe "#include?" do
     it "should accept symbols" do
-      subject.should include(:string)
-      subject.should_not include(:string2)
+      expect(subject).to include(:string)
+      expect(subject).not_to include(:string2)
     end
 
     it "should accept strings" do
-      subject.should include('fixnum')
-      subject.should_not include('fixnum2')
+      expect(subject).to include('fixnum')
+      expect(subject).not_to include('fixnum2')
     end
   end
 
@@ -73,32 +73,32 @@ describe Configoro::Hash do
       subject << { :a => 'b', :b => { :c => 'd' } }
       subject << { :a => 'b', :b => { :d => 'e' } }
 
-      subject.a.should eql('b')
-      subject.b.c.should eql('d')
-      subject.b.d.should eql('e')
+      expect(subject.a).to eql('b')
+      expect(subject.b.c).to eql('d')
+      expect(subject.b.d).to eql('e')
     end
 
     it "should load a YAML file and deep-merge its entries" do
       subject << "#{File.dirname __FILE__}/../data/config/environments/common/hash_test.yml"
       subject << "#{File.dirname __FILE__}/../data/config/environments/development/hash_test.yml"
 
-      subject.hash_test.akey.should eql('value')
-      subject.hash_test.subhash.key1.should eql('val1')
-      subject.hash_test.subhash.key2.should eql('newval')
+      expect(subject.hash_test.akey).to eql('value')
+      expect(subject.hash_test.subhash.key1).to eql('val1')
+      expect(subject.hash_test.subhash.key2).to eql('newval')
     end
 
     it "should raise an error if the file is not a YAML file" do
-      lambda { subject << "example.txt" }.should raise_error(ArgumentError)
+      expect { subject << "example.txt" }.to raise_error(ArgumentError)
     end
 
     it "should not change the receiver if the file doesn't exist" do
       subject << "example.yml"
-      subject.should be_empty
+      expect(subject).to be_empty
     end
 
     it "should preprocess YAML file as ERB" do
       subject << "#{File.dirname __FILE__}/../data/config/environments/common/erb_test.yml"
-      subject.erb_test.sum.should == 2
+      expect(subject.erb_test.sum_test).to eql(2)
     end
   end
 
@@ -108,15 +108,15 @@ describe Configoro::Hash do
     it "should merge in keys and values" do
       subject['a'] = 'old'
       subject.deep_merge! :a => 'new'
-      subject.a.should eql('new')
+      expect(subject.a).to eql('new')
     end
 
     it "should deep-merge sub-hashes and convert them to Configoro::Hashes" do
       subject['hsh'] = { 'key1' => 'val1', 'key2' => 'val2' }
       subject.deep_merge! :hsh => { 'key2' => 'newval' }
 
-      subject.hsh.key1.should eql('val1')
-      subject.hsh.key2.should eql('newval')
+      expect(subject.hsh.key1).to eql('val1')
+      expect(subject.hsh.key2).to eql('newval')
     end
   end
 
