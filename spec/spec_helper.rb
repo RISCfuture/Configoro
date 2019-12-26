@@ -11,12 +11,13 @@ require 'configoro'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.before :each do
-    application = double('Rails.application', :class => 'MyApp::Application')
-    ::Rails = double('Rails', :application => application, :env => 'development', :root => File.join(File.dirname(__FILE__), 'data'))
+    application = instance_double('Rails::Application', class: 'MyApp::Application')
+    Object.send :remove_const, :Rails
+    ::Rails = class_double('Rails', application: application, env: 'development', root: File.join(File.dirname(__FILE__), 'data'))
     Configoro.initialize
   end
 end

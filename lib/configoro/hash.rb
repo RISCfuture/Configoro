@@ -3,7 +3,7 @@ module Configoro
 
     # @private
     def initialize(hsh={})
-      if hsh.kind_of?(::Hash) then
+      if hsh.kind_of?(::Hash)
         super()
         update hsh
       else
@@ -28,6 +28,7 @@ module Configoro
         when String
           raise ArgumentError, "Only files ending in .yml can be added" unless File.extname(hsh_or_path) == '.yml'
           return self unless File.exist?(hsh_or_path)
+
           data = load_preprocessed_yaml(hsh_or_path)
           deep_merge! File.basename(hsh_or_path, ".yml") => data
         when ::Hash
@@ -35,7 +36,7 @@ module Configoro
       end
     end
 
-    alias_method :push, :<<
+    alias push <<
 
     # @private
     def dup
@@ -51,8 +52,8 @@ module Configoro
     def deep_merge!(other_hash)
       other_hash.each_pair do |k, v|
         tv      = self[k]
-        self[k] = if v.kind_of?(::Hash) then
-                    if tv.kind_of?(::Hash) then
+        self[k] = if v.kind_of?(::Hash)
+                    if tv.kind_of?(::Hash)
                       Configoro::Hash.new(tv).deep_merge!(v)
                     else
                       Configoro::Hash.new(v)
@@ -71,14 +72,14 @@ module Configoro
     # be removed.
 
     def method_missing(meth, *args)
-      if include?(meth.to_s) then
-        if args.empty? then
+      if include?(meth.to_s)
+        if args.empty?
           create_getter meth
         else
           raise ArgumentError, "wrong number of arguments (#{args.size} for 0)"
         end
-      elsif meth.to_s =~ /^(.+)\?$/ and include?(root_meth = $1) then
-        if args.empty? then
+      elsif meth.to_s =~/^(.+)\?$/ && include?((root_meth = Regexp.last_match(1)))
+        if args.empty?
           !!create_getter(root_meth) #TODO duplication of logic
         else
           raise ArgumentError, "wrong number of arguments (#{args.size} for 0)"
@@ -89,39 +90,46 @@ module Configoro
     end
 
     # @private
+    def respond_to_missing?(meth, *args)
+      include?(meth.to_s) ||
+          (meth.to_s =~ /^(.+)\?$/ && include?(Regexp.last_match(1))) ||
+          super(meth, *args)
+    end
+
+    # @private
     def inspect
-      "#{to_hash.inspect}:#{self.class.to_s}"
+      "#{to_hash.inspect}:#{self.class}"
     end
 
     def to_symbolized_hash
-      inject({}) do |hsh, (key, value)|
-        case value
-          when Configoro::Hash
-            hsh[key.to_sym] = value.to_symbolized_hash
-          else
-            hsh[key.to_sym] = value
-        end
-        hsh
+      each_with_object({}) do |(key, value), hsh|
+        hsh[key.to_sym] = case value
+                            when Configoro::Hash
+                              value.to_symbolized_hash
+                            else
+                              value
+                          end
       end
     end
 
-    protected
-
+    # @private
     def self.new_from_hash_copying_default(hash)
       Configoro::Hash.new(hash).tap do |new_hash|
         new_hash.default = hash.default
       end
     end
 
+    protected
+
     def convert_value(value, options={})
-      if value.is_a? ::Hash
+      if value.kind_of? ::Hash
         if options[:for] == :to_hash
           value.to_hash
         else
           #value.nested_under_indifferent_access
           self.class.new_from_hash_copying_default(value)
         end
-      elsif value.is_a?(Array)
+      elsif value.kind_of?(Array)
         unless options[:for] == :assignment
           value = value.dup
         end
@@ -135,7 +143,7 @@ module Configoro
 
     def create_getter(meth)
       singleton_class.send(:define_method, meth) do
-        if include?(meth.to_s) then
+        if include?(meth.to_s)
           self[meth.to_s]
         else
           remove_getter meth
@@ -143,7 +151,7 @@ module Configoro
       end
 
       singleton_class.send(:define_method, :"#{meth}?") do
-        if include?(meth.to_s) then
+        if include?(meth.to_s)
           !!self[meth.to_s]
         else
           remove_getter meth
@@ -154,19 +162,19 @@ module Configoro
     end
 
     def remove_getter(meth)
-      if methods.include?(meth.to_sym) then
-        instance_eval "undef #{meth.to_sym.inspect}"
+      if methods.include?(meth.to_sym)
+        instance_eval "undef #{meth.to_sym.inspect}", __FILE__, __LINE__
       end
 
-      if methods.include?(:"#{meth}?") then
-        instance_eval "undef #{:"#{meth}?".inspect}"
+      if methods.include?(:"#{meth}?")
+        instance_eval "undef #{:"#{meth}?".inspect}", __FILE__, __LINE__
       end
 
-      raise NameError, "undefined local variable or method `#{meth}' for #{self.inspect}"
+      raise NameError, "undefined local variable or method `#{meth}' for #{inspect}"
     end
 
     def load_preprocessed_yaml(path)
-      YAML.load(ERB.new(IO.read(path)).result)
+      YAML.safe_load(ERB.new(IO.read(path)).result, [Symbol])
     end
   end
 end

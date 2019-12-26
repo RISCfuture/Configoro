@@ -58,11 +58,10 @@ module Configoro
     config
   end
 
-  private
-
   def self.namespace
     Object.const_get Rails.application.class.to_s.split('::').first
   end
+  private_class_method :namespace
 
   def self.load_data(config, env)
     paths.each do |path|
@@ -70,4 +69,5 @@ module Configoro
       Dir.glob("#{path}/#{env}/*.yml").sort.each { |file| config << file }
     end
   end
+  private_class_method :load_data
 end

@@ -33,24 +33,24 @@ describe Configoro do
 
     it "should not complain when there is no directory for the current environment" do
       allow(Rails).to receive(:env).and_return('unknown')
-      Configoro.initialize
-      expect(MyApp::Configuration).to eql({"basic"=>{"common_only"=>"common", "env_name"=>"common"}, "erb_test" => {"sum_test" => 2}, "hash_test"=>{"akey"=>"value", "subhash"=>{"key1"=>"val1", "key2"=>"val2"}}})
+      described_class.initialize
+      expect(MyApp::Configuration).to eql("basic"=>{"common_only"=>"common", "env_name"=>"common"}, "erb_test" => {"sum_test" => 2}, "hash_test"=>{"akey"=>"value", "subhash"=>{"key1"=>"val1", "key2"=>"val2"}})
     end
 
     context "[custom search paths]" do
-      before(:each) { Configoro.instance_variable_set :@paths, nil }
+      before(:each) { described_class.instance_variable_set :@paths, nil }
 
       it "should use common configuration under a custom search path" do
         allow(Rails).to receive(:env).and_return('unknown')
-        Configoro.paths << File.join(File.dirname(__FILE__), 'data', 'other')
-        Configoro.initialize
+        described_class.paths << File.join(File.dirname(__FILE__), 'data', 'other')
+        described_class.initialize
         expect(MyApp::Configuration.basic.env_name).to eql('other_common')
       end
 
       it "should use environment-specific configuration under a custom search path" do
         allow(Rails).to receive(:env).and_return('development')
-        Configoro.paths << File.join(File.dirname(__FILE__), 'data', 'other')
-        Configoro.initialize
+        described_class.paths << File.join(File.dirname(__FILE__), 'data', 'other')
+        described_class.initialize
         expect(MyApp::Configuration.basic.env_name).to eql('other_development')
       end
     end

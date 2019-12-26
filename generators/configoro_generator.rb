@@ -6,12 +6,12 @@ class ConfigoroGenerator < Rails::Generators::Base
 
   def create_yaml_files
     create_file "config/environments/common/example.yml",
-                { 'common_setting' => true }.to_yaml
+                {'common_setting' => true}.to_yaml
     create_file "config/environments/development/example.yml",
-                { 'environment_name' => 'Development' }.to_yaml
+                {'environment_name' => 'Development'}.to_yaml
     create_file "config/environments/test/example.yml",
-                { 'environment_name' => 'Test' }.to_yaml
+                {'environment_name' => 'Test'}.to_yaml
     create_file "config/environments/production/example.yml",
-                { 'environment_name' => 'Production' }.to_yaml
+                {'environment_name' => 'Production'}.to_yaml
   end
 end

@@ -10,8 +10,8 @@ group :development do
   gem 'rspec-its', require: 'rspec/its'
 
   # DOCS
-  gem 'yard'
   gem 'redcarpet'
+  gem 'yard'
 
   # LIBRARIES
   gem 'bundler'

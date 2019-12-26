@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'rubygems'
 
 #################################### BUNDLER ###################################
@@ -8,8 +6,8 @@ require 'bundler'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  warn e.message
+  warn "Run `bundle install` to install missing gems"
   exit e.status_code
 end
 require 'rake'
@@ -22,8 +20,8 @@ Jeweler::Tasks.new do |gem|
   gem.name        = 'configoro'
   gem.homepage    = 'http://github.com/RISCfuture/configoro'
   gem.license     = 'MIT'
-  gem.summary     = %Q{Configuration object and YAML-based storage for Rails apps}
-  gem.description = %Q{Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files.}
+  gem.summary     = %(Configuration object and YAML-based storage for Rails apps)
+  gem.description = %(Creates a YourApp::Configuration object whose methods are generated from environment-specific YAML files.)
   gem.email       = 'git@timothymorgan.info'
   gem.authors     = ['Tim Morgan']
   # dependencies defined in Gemfile
@@ -38,7 +36,7 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-task :default => :spec
+task default: :spec
 
 ##################################### YARD #####################################
 
@@ -52,8 +50,8 @@ YARD::Rake::YardocTask.new do |doc|
   doc.options << '-o' << 'doc'
   doc.options << '--title' << 'Configoro Documentation'
 
-  doc.files = %w(lib/**/* README.md)
+  doc.files = %w[lib/**/* README.md]
 end
 
 desc "Generate API documentation"
-task :doc => :yard
+task doc: :yard
