@@ -7,7 +7,7 @@
 
 Gem::Specification.new do |s|
   s.name = "configoro".freeze
-  s.version = "1.4.1"
+  s.version = "1.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
@@ -52,7 +52,16 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/RISCfuture/configoro".freeze
   s.licenses = ["MIT".freeze]
   s.rubygems_version = "2.7.5".freeze
-  s.summary = "Configuration object and YAML-based storage for Rails apps".freeze
+  s.summary = "[DEPRECATED] Configuration object and YAML-based storage for Rails apps".freeze
+  s.post_install_message = <<~MSG
+
+    ⚠️  DEPRECATED: configoro is no longer maintained.
+
+    Consider `anyway_config`, `dry-configurable`, or modern Rails credentials (`config/credentials`) for application configuration.
+
+    This is the final release. No further updates are planned.
+
+  MSG
 
   if s.respond_to? :specification_version
     s.specification_version = 4

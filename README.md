@@ -1,3 +1,9 @@
+## ⚠️ DEPRECATED
+
+**This gem is no longer maintained.** Consider [`anyway_config`](https://github.com/palkan/anyway_config), [`dry-configurable`](https://dry-rb.org/gems/dry-configurable/), or modern Rails credentials (`config/credentials`) for application configuration.
+
+---
+
 Configoro
 =========
 
